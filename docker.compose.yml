@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+  stockapi:
+    build:
+      context: .
+      args:
+        MODE: development
+    image: stock-api-dev
+    container_name: stockapi
+    restart: always
+    environment:
+      MODE: development
+      # SBU: ${SBU}
+      # PUBLIC_HOST: ${PUBLIC_HOST}
+      # BASE_URL: ${BASE_URL}
+    ports:
+      - "3000:3000"
+    volumes:
+      # - ./build:/opt/app/build
+      # - ./src:/opt/app/src
+      - ./package.json:/opt/app/package.json
+    entrypoint: /opt/app/entrypoint.sh
+    command: start
+
+networks:
+  default:
+    external:
+      name: farm
